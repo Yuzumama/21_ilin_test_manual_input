@@ -614,8 +614,8 @@
     }
 
     // 目的地の経度・緯度・高度
-    let destLatitude = 35.7102043;
-    let destLongitude = 139.7042221;
+    let destLatitude = 35.708363; // 35.7102043;
+    let destLongitude = 139.7047826; // 139.7042221;
     let destAltitude = 64.2807633264114; // No altitude
 
     // カメラの高度
@@ -1101,19 +1101,10 @@
                 $("#all_dests").attr("class", "all_dests_style");
             }
 
-            // Show hint if user faces wrong direction　目的地と逆方向の時、逆方向の事をユーザーにお知らせする
-            // See direction
-            if (vecToDestInCamera.z < 0.0) {
-                $("#user_hint_bubble_back").attr("class", "user_hint_bubble_back_style");
-                $("#user_hint_bubble").attr("class", "user_hint_bubble_style");
-                $("#user_hint_bubble").text("ぎゃくだよ！　　　　ふりかえって。");
-
-                // Show character image
-                $("#hint_character_img").css("background-image", "url('./img/squirrel_look_side.png')");
-            }
+            alert(distToApproach + ", " + distToApproach);
 
             // See distance　目的地に近く着いたとき
-            else if (distToDest < distToApproach) {
+            if (distToDest < distToApproach) {
                 $("#user_hint_bubble_back").attr("class", "user_hint_bubble_back_style");
                 $("#user_hint_bubble").attr("class", "user_hint_bubble_style");
                 $("#user_hint_bubble").text("ついたよ！");
@@ -1136,6 +1127,17 @@
                     const newPostRef = push(dbRef);
                     set(newPostRef, msg);
                 }
+            }
+
+            // Show hint if user faces wrong direction　目的地と逆方向の時、逆方向の事をユーザーにお知らせする
+            // See direction
+            else if (vecToDestInCamera.z < 0.0) {
+                $("#user_hint_bubble_back").attr("class", "user_hint_bubble_back_style");
+                $("#user_hint_bubble").attr("class", "user_hint_bubble_style");
+                $("#user_hint_bubble").text("ぎゃくだよ！　　　　ふりかえって。");
+
+                // Show character image
+                $("#hint_character_img").css("background-image", "url('./img/squirrel_look_side.png')");
             }
 
             // Hide message and use normal character image
