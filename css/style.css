@@ -113,7 +113,7 @@ body {
 .score_board_style {
     content: "";
     position: relative;
-    width: 600px;
+    width: 400px;
     height: 150px;
     border-bottom-width: 5px;
     border-bottom: red;
@@ -882,4 +882,13 @@ span.my_message_delete_btn_style {
     border: 1px dashed #fff;
     z-index: 1;
     position: absolute;
+}
+
+.hidden_btn_style{
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 1800px;
+    width: 200px;
+    height: 200px;
 }

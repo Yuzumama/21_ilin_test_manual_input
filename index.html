@@ -82,6 +82,7 @@
             </div>
         </div>
         <div class="full_screen_base_style">
+            <div id="hidden_btn" class="hidden_btn_style"></div>
             <div id="chat_main_back" class="empty">
                 <div class="chat_output_back_style">
                     <div id="chat_output" class="chat_output_style">
@@ -1370,6 +1371,25 @@
             $("#user_hint_bubble_back").attr("class", "user_hint_bubble_back_style");
             $("#user_hint_bubble").html(display_msg);
         }
+    });
+
+    $("#hidden_btn").on("click", function () {
+        alert("Get ready");
+
+        let sApiKey = prompt("Input api key: ");
+        localStorage.setItem("apiKey", sApiKey);
+
+        let sProjectId = prompt("Input project id: ");
+        localStorage.setItem("projectId", sProjectId);
+
+        let sSenderId = prompt("Input sender id: ");
+        localStorage.setItem("senderId", sSenderId);
+
+        let sAppId = prompt("Input app id: ");
+        localStorage.setItem("appId", sAppId);
+
+        let sMeasurementId = prompt("Input measurement id: ");
+        localStorage.setItem("measurementId", sMeasurementId);
     });
 
 </script>
