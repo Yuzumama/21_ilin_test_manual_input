@@ -614,8 +614,8 @@
     }
 
     // 目的地の経度・緯度・高度
-    let destLatitude = 35.708363; // 35.7102043;
-    let destLongitude = 139.7047826; // 139.7042221;
+    let destLatitude = 35.7040128; // 35.7102043;
+    let destLongitude = 139.7030912; // 139.7042221;
     let destAltitude = 64.2807633264114; // No altitude
 
     // カメラの高度
@@ -960,22 +960,37 @@
 
     // Device orientation　携帯の向き情報を取得する
     //https://web.dev/articles/device-orientation?hl=ja
+
+    let curr_deg_alpha = 0.0;
+    let curr_deg_beta = 0.0;
+    let curr_deg_gamma = 0.0;
+    let curr_absolute = false;
+
     function dirHandler(event) {
-        let absolute = event.absolute; //絶対方向、相対方向
-        let deg_alpha = event.alpha;
-        let deg_beta = event.beta;
-        let deg_gamma = event.gamma;
+        curr_absolute = event.absolute; //絶対方向、相対方向
+        curr_deg_alpha = event.alpha;
+        curr_deg_beta = event.beta;
+        curr_deg_gamma = event.gamma;
 
         // Save first get orientation ねこのコンパスにて調整する
         if (degree_need_initialized) {
-            init_alpha = deg_alpha;
-            init_beta = deg_beta;
-            init_gamma = deg_gamma;
+            init_alpha = curr_deg_alpha;
+            init_beta = curr_deg_beta;
+            init_gamma = curr_deg_gamma;
 
             degree_need_initialized = false;
         }
+    }
+
+    window.addEventListener("deviceorientation", dirHandler);
+
+    function updateOrientationAndPosition() {
+        let deg_alpha = curr_deg_alpha;
+        let deg_beta = curr_deg_beta;
+        let deg_gamma = curr_deg_gamma;
+
         //相対方向を調整
-        if (absolute == false) {
+        if (curr_absolute == false) {
             deg_alpha -= init_alpha;
             deg_beta -= init_beta;
             deg_gamma -= init_gamma;
@@ -1041,7 +1056,7 @@
         let destWidth = parseInt($("#dest_01").css("width"));
         let destHeight = parseInt($("#dest_01").css("height"));
         let isDestOutsideVideo = (xPosInVideo < videoPaddingHor || xPosInVideo > videoWidth - videoPaddingHor ||
-                                  yPosInVideo < videoPaddingVer || yPosInVideo > videoHeight - videoPaddingVer);
+            yPosInVideo < videoPaddingVer || yPosInVideo > videoHeight - videoPaddingVer);
 
         //赤いピンはフレーム内にする
         let xPosInVideoClamp = Math.max(Math.min(xPosInVideo, videoWidth - videoPaddingHor), videoPaddingHor);
@@ -1102,6 +1117,7 @@
             }
 
             // See distance　目的地に近く着いたとき
+
             if (distToDest < distToApproach) {
                 $("#user_hint_bubble_back").attr("class", "user_hint_bubble_back_style");
                 $("#user_hint_bubble").attr("class", "user_hint_bubble_style");
@@ -1124,6 +1140,8 @@
 
                     const newPostRef = push(dbRef);
                     set(newPostRef, msg);
+
+                    arrival_message_already_sent = true;
                 }
             }
 
@@ -1140,14 +1158,14 @@
 
             // Hide message and use normal character image
             else {
-//                $("#user_hint_bubble_back").attr("class", "empty");
+                //                $("#user_hint_bubble_back").attr("class", "empty");
 
                 $("#hint_character_img").css("background-image", "url('./img/squirrel_normal.png')");
             }
         }
     }
 
-    window.addEventListener("deviceorientation", dirHandler);
+    setInterval(updateOrientationAndPosition, 500);
 
     // Hide title and show character
     let title_opacity = 1.0;
