@@ -217,7 +217,48 @@
 
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    import { getFirebaseConfig } from "./js/firebase_config.js";
+    //    import { getFirebaseConfig } from "./js/firebase_config.js";
+
+    function getFirebaseConfig() {
+
+        let sApiKey = localStorage.getItem("apiKey");
+        if (sApiKey == null) {
+            sApiKey = prompt("Input api key: ");
+            localStorage.setItem("apiKey", sApiKey);
+        }
+        let sProjectId = localStorage.getItem("projectId");
+        if (sProjectId == null) {
+            sProjectId = prompt("Input project id: ");
+            localStorage.setItem("projectId", sProjectId);
+        }
+        let sSenderId = localStorage.getItem("senderId");
+        if (sSenderId == null) {
+            sSenderId = prompt("Input sender id: ");
+            localStorage.setItem("senderId", sSenderId);
+        }
+        let sAppId = localStorage.getItem("appId");
+        if (sAppId == null) {
+            sAppId = prompt("Input app id: ");
+            localStorage.setItem("appId", sAppId);
+        }
+        let sMeasurementId = localStorage.getItem("measurementId");
+        if (sMeasurementId == null) {
+            sMeasurementId = prompt("Input measurement id: ");
+            localStorage.setItem("measurementId", sMeasurementId);
+        }
+
+        const firebaseConfig = {
+            apiKey: sApiKey,
+            authDomain: sProjectId + ".firebaseapp.com",
+            projectId: sProjectId,
+            storageBucket: sProjectId + ".appspot.com",
+            messagingSenderId: sSenderId,
+            appId: sAppId,
+            measurementId: sMeasurementId
+        };
+        return firebaseConfig;
+    }
+
     let firebaseConfig = getFirebaseConfig();
 
     // Initialize Firebase
