@@ -884,11 +884,19 @@ span.my_message_delete_btn_style {
     position: absolute;
 }
 
+.hidden_btn_back_style {
+    position: relative;
+    width: 0px;
+    height: 0px;
+}
+
 .hidden_btn_style{
     content: "";
-    position: absolute;
-    left: 0px;
-    top: 1800px;
-    width: 200px;
-    height: 200px;
+    position: relative;
+    left: 700px;
+    top: 0px;
+    width: 100px;
+    height: 100px;
+    border-width: 2px;
+    z-index: 20;
 }
